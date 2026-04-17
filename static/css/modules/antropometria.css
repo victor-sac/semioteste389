@@ -1,0 +1,178 @@
+/* static/css/modules/antropometria.css */
+
+/* ========================================
+   LAYOUT PRINCIPAL
+   ======================================== */
+
+.antro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0 16px;
+    width: 100%;
+}
+
+.antro-basics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+    .antro-basics-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* ========================================
+   MEASURE ROWS - SEM LADO
+   ======================================== */
+
+.measure-row {
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.measure-row.single {
+    display: flex;
+    justify-content: center;
+}
+
+/* ========================================
+   MEASURE GROUPS - COM LADO
+   ======================================== */
+
+.measure-side-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.measure-side-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+/* ========================================
+   SIDE TOGGLE BUTTONS
+   ======================================== */
+
+.side-buttons-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.side-toggle-btn {
+    flex: 0 1 auto;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    transition: all var(--transition-fast) ease;
+}
+
+.side-toggle-btn:hover {
+    background-color: rgba(255, 107, 53, 0.1);
+}
+
+.side-toggle-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   BOTÃO MEDIR CONTRALATERAL
+   ======================================== */
+
+.btn-contralateral-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.btn-contralateral {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 6px;
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+    font-weight: 600;
+}
+
+.btn-contralateral:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   LIGHT MODE THEME
+   ======================================== */
+
+body:not(.dark-mode) .side-toggle-btn {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+body:not(.dark-mode) .side-toggle-btn:hover {
+    background-color: rgba(255, 107, 53, 0.08);
+}
+
+body:not(.dark-mode) .side-toggle-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+body:not(.dark-mode) .btn-contralateral {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+body:not(.dark-mode) .btn-contralateral:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 600px) {
+    .side-buttons-container {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .side-toggle-btn {
+        flex: 0 1 calc(50% - 4px);
+    }
+}

@@ -1,0 +1,116 @@
+/* Cards */
+.exam-section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+/* Inputs */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+input[type="number"], input[type="text"], textarea {
+    width: 100%;
+    height: var(--touch-target);
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+textarea { height: auto; padding: 10px; }
+
+/* Botões de Toggle (Sim/Não/Opções) */
+.toggle-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.btn-toggle {
+    flex: 1;
+    min-height: var(--touch-target);
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-weight: 500;
+    color: #495057;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-toggle:active { transform: scale(0.98); }
+
+.btn-toggle.selected {
+    background-color: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+    box-shadow: 0 2px 6px rgba(0, 86, 179, 0.3);
+}
+
+/* Campos Condicionais */
+.conditional-field {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+    border-left: 5px solid #ffc107;
+}
+
+.conditional-field.visible {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Botões Genéricos */
+.btn-secondary {
+    width: 100%;
+    height: var(--touch-target);
+    background: white;
+    border: 1px solid #adb5bd;
+    color: #495057;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+/* Botões de Cruzes (Intensidade) */
+.cruzes-container {
+    padding-left: 5px;
+}
+
+.btn-cruz {
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #495057;
+    transition: all 0.2s;
+}
+
+.btn-cruz:hover {
+    background: #e9ecef;
+}
+
+.btn-cruz.selected {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+}

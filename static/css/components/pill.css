@@ -1,0 +1,198 @@
+/* ============================================================================
+   PILL COMPONENT - Reutilizável para Input, Date, Toggle, e Seleção
+   ============================================================================
+   
+   Componente base para pills (cápsulas de seleção/entrada de dados).
+   ========================================================================== */
+
+/* ============================================================================
+   PILL WRAPPER & LABEL
+   ============================================================================ */
+
+.pill-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;   /* Mantém a pílula centralizada na tela */
+    transition: all var(--transition-fast) ease;
+}
+
+.pill-wrapper.no-label {
+    gap: 0;
+}
+
+.pill-label {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ============================================================================
+   BASE PILL CONTAINER
+   ============================================================================ */
+
+.pill-container {
+    display: flex;
+    align-items: center; 
+    gap: 6px;            
+    width: 100%;
+    max-width: 300px; /* Define o tamanho intermediário padrão */
+    margin: 0 auto;   /* Mantém a pílula centralizada na tela */
+    height: var(--pill-height-mobile, 48px);
+    background-color: var(--dark-bg);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    padding: 0 var(--pill-padding-x-mobile, 16px);
+    box-shadow: 0 4px 15px var(--dark-shadow);
+    box-sizing: border-box;
+    transition: all var(--transition-fast) ease;
+}
+
+.pill-container:focus-within {
+    border-color: var(--primary-color);
+}
+
+/* ============================================================================
+   PILL CONTENT
+   ============================================================================ */
+
+.pill-icon {
+    font-size: var(--pill-icon-size-mobile);
+    color: var(--icon-gray);
+    flex-shrink: 0;  /* Impede que o ícone seja esmagado ou distorcido */
+}
+
+.pill-input {
+    flex: 1;         /* Faz o input ocupar o espaço do meio inteiro */
+    min-width: 0;    /* Evita que o input estoure o limite do flexbox */
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    padding: 0;
+    height: auto;
+}
+
+.pill-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.pill-separator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: var(--pill-input-font-size-mobile);
+    font-weight: 700;
+    flex-shrink: 0; /* Mantém o sufixo no tamanho correto sem ser esmagado */
+}
+
+/* ============================================================================
+   PILL BUTTON (Toggle)
+   ============================================================================ */
+
+.pill-btn {
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: var(--icon-gray);
+    border-radius: var(--radius-full);
+    padding: 0;
+    font-size: var(--pill-button-font-size);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+    outline: none;
+}
+
+.pill-btn:hover {
+    color: var(--white);
+}
+
+.pill-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.pill-btn .material-icons-round {
+    font-size: var(--pill-icon-font-size);
+}
+
+/* ============================================================================
+   LIGHT MODE THEME
+   ============================================================================ */
+
+body:not(.dark-mode) .pill-container {
+    background-color: var(--white);
+    border: 1px solid var(--pill-border-light);
+    box-shadow: 0 4px 15px var(--light-shadow);
+}
+
+body:not(.dark-mode) .pill-icon {
+    color: var(--pill-text-light-muted);
+}
+
+body:not(.dark-mode) .pill-input {
+    color: var(--pill-text-light);
+}
+
+body:not(.dark-mode) .pill-input::placeholder {
+    color: #c0c6cc;
+}
+
+body:not(.dark-mode) .pill-separator {
+    color: var(--icon-gray);
+}
+
+body:not(.dark-mode) .pill-btn {
+    color: var(--pill-text-light-muted);
+}
+
+body:not(.dark-mode) .pill-btn:hover:not(.active) {
+    color: var(--pill-text-light);
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+body:not(.dark-mode) .pill-btn.active {
+    color: var(--white);
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (min-width: 768px) {
+    .pill-container {
+        max-width: var(--pill-max-width-desktop);
+        height: var(--pill-height-desktop);
+        padding-right: var(--pill-padding-x-desktop);
+        padding-left: var(--pill-padding-x-desktop);
+    }
+
+    .pill-icon {
+        font-size: var(--pill-icon-size-desktop);
+    }
+
+    .pill-input,
+    .pill-separator {
+        font-size: var(--pill-input-font-size-desktop);
+    }
+
+    .pill-btn {
+        font-size: 1rem;
+    }
+
+    .pill-btn .material-icons-round {
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SemioLog - Exame Físico Digital</title>
+    
+    <link rel="stylesheet" href="../static/v1/css/main.css">
+    <link rel="stylesheet" href="../static/v1/css/components.css">
+    <link rel="stylesheet" href="../static/v1/css/landing.css">
+</head>
+<body>
+
+    <section id="landing-layer" class="landing-container">
+        <div class="landing-card">
+            <div class="landing-header">
+                <div class="logo-icon">🩺</div>
+                <h1>SemioLog</h1>
+                <p class="subtitle">Sistema de Exame Físico Estruturado</p>
+            </div>
+            <div class="landing-body">
+                <p>Aplicação responsiva para coleta ágil de sinais clínicos.</p>
+                <div class="lgpd-box">
+                    <strong>🔒 Aviso de Privacidade e LGPD</strong>
+                    <p>Este software opera localmente. Dados não salvos serão perdidos ao recarregar.</p>
+                </div>
+                <button id="btn-start-exam" class="btn-primary-large">Iniciar Novo Exame</button>
+            </div>
+            <div class="landing-footer">Versão 1.2.0 Dark Mode</div>
+        </div>
+    </section>
+
+    <div id="app-layer" class="app-container hidden">
+        
+        <header class="mobile-header">
+            <div style="display: flex; align-items: center;">
+                <button id="btn-menu-toggle" class="btn-hamburger">☰</button>
+                <span class="mobile-title">SemioLog</span>
+            </div>
+            <button id="btn-theme-mobile" class="btn-theme-toggle">🌙</button>
+        </header>
+
+        <nav class="sidebar" id="sidebar">
+            <div class="brand">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                     <div class="brand-text" style="text-align: left;">
+                        <h1>SemioLog</h1>
+                    </div>
+                    <button id="btn-theme-desktop" class="btn-theme-toggle" title="Alternar Tema">🌙</button>
+                </div>
+                
+                <p>Prontuário Digital</p>
+                
+                <button id="btn-return-home" class="btn-back-header">
+                    Voltar
+                </button>
+            </div>
+            
+            <ul id="nav-menu">
+                </ul>
+        </nav>
+
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+        <main id="content-area" class="content">
+            </main>
+    </div>
+
+    <script type="module" src="../static/v1/js/app.js"></script>
+</body>
+</html>

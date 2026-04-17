@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SemioLog - Exame Físico Cardíaco Avançado</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --secondary-accent: #3498db;
+            --bg-color: #f0f2f5;
+            --panel-width: 320px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h2 { margin-bottom: 5px; }
+        .instructions { color: #666; font-size: 14px; margin-bottom: 20px; text-align: center; max-width: 800px;}
+
+        /* Layout Principal */
+        .main-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+
+        .workspace-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 300px;
+        }
+
+        /* Painéis Laterais */
+        .side-panels {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: var(--panel-width);
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #settingsPanel { display: none; }
+        #settingsPanel.active { display: block; animation: slideIn 0.3s ease-out; }
+        
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); }}
+
+        .panel-header { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+        .pulse-type-label { font-size: 0.9em; font-weight: bold; color: white; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px;}
+        .label-ictus { background-color: var(--accent-color); }
+        .label-accessory { background-color: var(--secondary-accent); }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em;}
+        select, input[type="range"] { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd; box-sizing: border-box; }
+        .radio-group { display: flex; gap: 15px; }
+
+        /* Botões */
+        .toolbar { margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        button {
+            color: white; border: none; padding: 12px 20px;
+            font-size: 15px; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 8px; font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button#addPulseBtn { background-color: var(--primary-color); }
+        button#addPulseBtn:hover { background-color: #34495e; transform: translateY(-2px); }
+        
+        button#generateBtn { background-color: #27ae60; width: 100%; justify-content: center; margin-top: 10px;}
+        button#generateBtn:hover { background-color: #2ecc71; transform: translateY(-2px); }
+
+        /* Workspace da Imagem */
+        #workspace {
+            position: relative;
+            display: inline-block;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border: 3px solid white;
+        }
+
+        #chest-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Marcador de Pulso */
+        .pulse-marker {
+            --pulse-size: 20px;
+            --pulse-color: var(--accent-color);
+            --anim-duration: 1.5s;
+            --anim-scale: 4;
+            --anim-opacity: 0.6;
+            
+            position: absolute;
+            width: var(--pulse-size);
+            height: var(--pulse-size);
+            background-color: var(--pulse-color);
+            border-radius: 50%;
+            cursor: grab;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        .pulse-marker.selected { border: 2px solid white; box-shadow: 0 0 0 3px var(--primary-color); }
+        .pulse-marker[data-type="ictus"] { --pulse-color: var(--accent-color); }
+        .pulse-marker[data-type="accessory"] { --pulse-color: var(--secondary-accent); }
+
+        .pulse-marker::before, .pulse-marker::after {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
+            background-color: var(--pulse-color); border-radius: 50%; opacity: var(--anim-opacity);
+            transform: translate(-50%, -50%) scale(1); animation: beat var(--anim-duration) infinite ease-out; pointer-events: none;
+        }
+        .pulse-marker::after { animation-delay: calc(var(--anim-duration) / 3); }
+
+        @keyframes beat {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: var(--anim-opacity); }
+            100% { transform: translate(-50%, -50%) scale(var(--anim-scale)); opacity: 0; }
+        }
+
+        /* Área do Texto Gerado */
+        #outputText {
+            width: 100%; height: 150px; padding: 10px; margin-top: 15px;
+            border-radius: 6px; border: 1px solid #ccc; background-color: #f9f9f9;
+            font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box;
+            line-height: 1.5; color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Módulo de Precórdio</h2>
+    <p class="instructions">
+        Adicione os pulsos sobre a imagem. O primeiro será o <b>Ictus Cordis</b> (vermelho), os demais serão <b>Impulsões Acessórias</b> (azul). Posicione-os corretamente para que o sistema detecte a localização anatômica automaticamente.
+    </p>
+
+    <div class="main-container">
+        <div class="workspace-area">
+            <div class="toolbar">
+                <button id="addPulseBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Adicionar Pulso
+                </button>
+            </div>
+            <div id="workspace">
+                <img id="chest-image" src="../static/Gemini_Generated_Image_jslhzujslhzujslh.jpg" alt="Tórax">
+            </div>
+        </div>
+
+        <div class="side-panels">
+            <div class="panel" id="settingsPanel">
+                <div class="panel-header">Propriedades do Pulso</div>
+                <div id="pulseTypeDisplay" class="pulse-type-label"></div>
+
+                <div class="form-group">
+                    <label for="extensionRange">Extensão (Tamanho)</label>
+                    <input type="range" id="extensionRange" min="10" max="50" value="20">
+                </div>
+                <div class="form-group">
+                    <label for="amplitudeSelect">Amplitude</label>
+                    <select id="amplitudeSelect">
+                        <option value="Pequena">Pequena</option>
+                        <option value="Normal" selected>Normal</option>
+                        <option value="Propulsiva">Propulsiva</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="durationSelect">Duração</label>
+                    <select id="durationSelect">
+                        <option value="Normal" selected>Normal</option>
+                        <option value="Prolongada">Prolongada</option>
+                    </select>
+                </div>
+                <div class="form-group" id="timingGroup">
+                    <label>Momento (Ciclo Cardíaco)</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="timing" value="Sistólica" checked> Sistólica</label>
+                        <label><input type="radio" name="timing" value="Diastólica"> Diastólica</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">Evolução Médica</div>
+                <button id="generateBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Gerar Descrição
+                </button>
+                <textarea id="outputText" placeholder="O texto gerado do exame físico aparecerá aqui..." readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const workspace = document.getElementById('workspace');
+        const chestImg = document.getElementById('chest-image');
+        const addPulseBtn = document.getElementById('addPulseBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const outputText = document.getElementById('outputText');
+        const settingsPanel = document.getElementById('settingsPanel');
+        
+        const pulseTypeDisplay = document.getElementById('pulseTypeDisplay');
+        const extensionRange = document.getElementById('extensionRange');
+        const amplitudeSelect = document.getElementById('amplitudeSelect');
+        const durationSelect = document.getElementById('durationSelect');
+        const timingGroup = document.getElementById('timingGroup');
+        const timingRadios = document.getElementsByName('timing');
+
+        let pulsesData = [];
+        let selectedPulseId = null;
+        let draggedItem = null;
+
+        // --- Adicionar Pulso ---
+        addPulseBtn.addEventListener('click', () => {
+            const isFirstPulse = pulsesData.filter(p => p.type === 'ictus').length === 0;
+            const type = isFirstPulse ? 'ictus' : 'accessory';
+            const pulseId = Date.now().toString();
+
+            const pulseEl = document.createElement('div');
+            pulseEl.className = 'pulse-marker';
+            pulseEl.dataset.type = type;
+            pulseEl.dataset.id = pulseId;
+            
+            // Inicia no centro
+            pulseEl.style.left = '50%';
+            pulseEl.style.top = '50%';
+            workspace.appendChild(pulseEl);
+
+            const newPulseData = {
+                id: pulseId,
+                element: pulseEl,
+                type: type,
+                extension: 20,
+                amplitude: 'Normal',
+                duration: 'Normal',
+                timing: 'Sistólica',
+                x: workspace.offsetWidth / 2, // Guarda coordenadas reais
+                y: workspace.offsetHeight / 2
+            };
+            
+            pulsesData.push(newPulseData);
+
+            pulseEl.addEventListener('mousedown', handleMouseDown);
+            pulseEl.addEventListener('touchstart', handleMouseDown, { passive: false });
+            pulseEl.addEventListener('click', () => { if (!draggedItem) openSettings(pulseId); });
+            pulseEl.addEventListener('dblclick', () => removePulse(pulseId));
+
+            openSettings(pulseId);
+            updatePulseVisuals(pulseId);
+        });
+
+        // --- Painel e Atualização Visual ---
+        function getPulseById(id) { return pulsesData.find(p => p.id === id); }
+
+        function openSettings(id) {
+            selectedPulseId = id;
+            const data = getPulseById(id);
+            if (!data) return;
+
+            document.querySelectorAll('.pulse-marker').forEach(p => p.classList.remove('selected'));
+            data.element.classList.add('selected');
+            settingsPanel.classList.add('active');
+
+            pulseTypeDisplay.textContent = data.type === 'ictus' ? 'Ictus Cordis' : 'Impulsão Acessória';
+            pulseTypeDisplay.className = 'pulse-type-label ' + (data.type === 'ictus' ? 'label-ictus' : 'label-accessory');
+            
+            extensionRange.value = data.extension;
+            amplitudeSelect.value = data.amplitude;
+            durationSelect.value = data.duration;
+
+            if (data.type === 'accessory') {
+                timingGroup.style.display = 'block';
+                timingRadios.forEach(r => r.checked = (r.value === data.timing));
+            } else {
+                timingGroup.style.display = 'none';
+            }
+        }
+
+        function updatePulseVisuals(id) {
+            const data = getPulseById(id);
+            const el = data.element;
+            el.style.setProperty('--pulse-size', `${data.extension}px`);
+            el.style.setProperty('--anim-duration', data.duration === 'Prolongada' ? '2.5s' : '1.5s');
+            
+            let scaleValue = '4', opacityValue = '0.6';
+            if(data.amplitude === 'Pequena') { scaleValue = '2.5'; opacityValue = '0.4'; }
+            if(data.amplitude === 'Propulsiva') { scaleValue = '5.5'; opacityValue = '0.8'; }
+            el.style.setProperty('--anim-scale', scaleValue);
+            el.style.setProperty('--anim-opacity', opacityValue);
+        }
+
+        // Listeners do Painel
+        extensionRange.addEventListener('input', (e) => { if(selectedPulseId) { getPulseById(selectedPulseId).extension = e.target.value; updatePulseVisuals(selectedPulseId); }});
+        amplitudeSelect.addEventListener('change', (e) => { if(selectedPulseId) { getPulseById(selectedPulseId).amplitude = e.target.value; updatePulseVisuals(selectedPulseId); }});
+        durationSelect.addEventListener('change', (e) => { if(selectedPulseId) { getPulseById(selectedPulseId).duration = e.target.value; updatePulseVisuals(selectedPulseId); }});
+        timingRadios.forEach(r => r.addEventListener('change', (e) => { if(selectedPulseId) getPulseById(selectedPulseId).timing = e.target.value; }));
+
+        function removePulse(id) {
+            const index = pulsesData.findIndex(p => p.id === id);
+            if (index > -1) {
+                pulsesData[index].element.remove();
+                pulsesData.splice(index, 1);
+                if (selectedPulseId === id) { settingsPanel.classList.remove('active'); selectedPulseId = null; }
+            }
+        }
+
+        // --- Arraste e Captura de Coordenadas ---
+        function handleMouseDown(e) {
+            if (e.type === 'mousedown' && e.button !== 0) return;
+            e.preventDefault();
+            draggedItem = this;
+            draggedItem.style.cursor = 'grabbing';
+        }
+
+        document.addEventListener('mousemove', handleDrag);
+        document.addEventListener('touchmove', handleDrag, { passive: false });
+        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchend', handleMouseUp);
+
+        function handleDrag(e) {
+            if (!draggedItem) return;
+            e.preventDefault();
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            const rect = workspace.getBoundingClientRect();
+            
+            let newLeft = clientX - rect.left;
+            let newTop = clientY - rect.top;
+            newLeft = Math.max(0, Math.min(newLeft, rect.width));
+            newTop = Math.max(0, Math.min(newTop, rect.height));
+            
+            draggedItem.style.left = `${newLeft}px`;
+            draggedItem.style.top = `${newTop}px`;
+        }
+
+        function handleMouseUp() {
+            if (draggedItem) {
+                draggedItem.style.cursor = 'grab';
+                // Salva a coordenada final no objeto de dados
+                const id = draggedItem.dataset.id;
+                const data = getPulseById(id);
+                data.x = parseFloat(draggedItem.style.left);
+                data.y = parseFloat(draggedItem.style.top);
+                
+                setTimeout(() => { draggedItem = null; }, 50);
+            }
+        }
+
+        // --- LÓGICA DE MAPEAMENTO ANATÔMICO ---
+        function getAnatomicalLocation(x, y, width, height) {
+            const px = x / width;
+            const py = y / height;
+
+            // Lado (Esquerda da imagem = Direita do paciente)
+            let side = px < 0.5 ? "direito" : "esquerdo";
+            if (px >= 0.44 && px <= 0.56) return "Região esternal";
+
+            // Linhas Verticais
+            let verticalLine = "";
+            if (side === "direito") {
+                if (px < 0.22) verticalLine = "linha axilar";
+                else if (px < 0.35) verticalLine = "lateral à linha hemiclavicular";
+                else verticalLine = "medial à linha hemiclavicular";
+            } else {
+                if (px > 0.78) verticalLine = "linha axilar";
+                else if (px > 0.65) verticalLine = "lateral à linha hemiclavicular";
+                else verticalLine = "medial à linha hemiclavicular";
+            }
+
+            // Espaços Intercostais (Estimativa baseada na imagem)
+            let ics = "";
+            if (py < 0.28) ics = "2º espaço intercostal";
+            else if (py < 0.40) ics = "3º espaço intercostal";
+            else if (py < 0.52) ics = "4º espaço intercostal";
+            else if (py < 0.65) ics = "5º espaço intercostal";
+            else if (py < 0.78) ics = "6º espaço intercostal";
+            else ics = "região de rebordo costal/inferior";
+
+            return `${ics} ${side}, ${verticalLine}`;
+        }
+
+        // --- Geração de Texto ---
+        generateBtn.addEventListener('click', () => {
+            if (pulsesData.length === 0) {
+                outputText.value = "Nenhum pulso mapeado. Adicione pulsos na imagem para gerar a descrição.";
+                return;
+            }
+
+            const imgWidth = workspace.offsetWidth;
+            const imgHeight = workspace.offsetHeight;
+            let reportTexts = [];
+
+            // Separa Ictus das Acessórias
+            const ictus = pulsesData.find(p => p.type === 'ictus');
+            const accessories = pulsesData.filter(p => p.type === 'accessory');
+
+            if (ictus) {
+                const loc = getAnatomicalLocation(ictus.x, ictus.y, imgWidth, imgHeight);
+                // Converte pixels (10-50) para "polpas digitais" (1 a 5)
+                const polpas = Math.max(1, Math.round(ictus.extension / 10)); 
+                
+                reportTexts.push(`Ictus cordis visível e palpável no ${loc}, abrangendo cerca de ${polpas} polpa(s) digital(is). Apresenta amplitude ${ictus.amplitude.toLowerCase()} e duração ${ictus.duration.toLowerCase()}.`);
+            } else {
+                reportTexts.push("Ictus cordis impalpável na posição avaliada.");
+            }
+
+            if (accessories.length > 0) {
+                let accTexts = accessories.map((acc, index) => {
+                    const loc = getAnatomicalLocation(acc.x, acc.y, imgWidth, imgHeight);
+                    return `Notada impulsão acessória ${acc.timing.toLowerCase()} no ${loc}, com amplitude ${acc.amplitude.toLowerCase()} e duração ${acc.duration.toLowerCase()}.`;
+                });
+                reportTexts.push(accTexts.join(" "));
+            } else {
+                reportTexts.push("Ausência de impulsões sistólicas ou diastólicas acessórias.");
+            }
+
+            outputText.value = reportTexts.join("\n\n");
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+.feedback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+    min-height: auto;
+    position: relative;
+}
+
+.status-text { 
+    font-weight: 600; 
+    font-size: 0.9rem; 
+    margin-top: 5px; 
+}
+
+/* Status Pill Base */
+.status-pill {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+    color: var(--text-on-pill) !important;
+}
+
+.status-pill.active {
+    display: inline-flex;
+    animation: fadeIn var(--transition-normal) ease;
+}
+
+/* Status Styles */
+.status-pill.status-normal {
+    background-color: var(--success-color);
+    box-shadow: 0 4px 10px var(--shadow-success);
+}
+
+.status-pill.status-warning {
+    background-color: var(--warning-color);
+    box-shadow: 0 4px 10px var(--shadow-warning);
+}
+
+.status-pill.status-alert {
+    background-color: var(--danger-color);
+    box-shadow: 0 4px 10px var(--shadow-danger);
+}
+
+.status-pill.status-error {
+    background-color: transparent;
+    color: var(--danger-color) !important;
+    border: 1px solid var(--danger-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Texto solto (sem pílula) */
+span.status-normal:not(.status-pill),
+span.status-warning:not(.status-pill),
+span.status-alert:not(.status-pill) {
+    background: none;
+    box-shadow: none;
+}
+
+span.status-normal:not(.status-pill) { color: var(--success-color); }
+span.status-warning:not(.status-pill) { color: var(--warning-color); }
+span.status-alert:not(.status-pill) { color: var(--danger-color); }
+
+/* ==========================================================================
+   ANIMAÇÃO DE CARREGAMENTO NOS BOTÕES DO MENU LATERAL (LAZY LOADING)
+   ========================================================================== */
+
+/* Prepara os botões para receberem a barra absoluta */
+.nav-btn.is-loading,
+.btn.is-loading {
+    position: relative;
+    overflow: hidden; /* Garante que a barra não passe das bordas arredondadas */
+    pointer-events: none; /* Impede múltiplos cliques enquanto o módulo carrega */
+}
+
+/* A barra de carregamento */
+.nav-btn.is-loading::after,
+.btn.is-loading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40%; /* Largura do "tubo" */
+    height: 3px; /* Altura fina e minimalista */
+    background-color: var(--primary-color); /* Integrado ao seu tema principal */
+    border-radius: 3px;
+    animation: loading-slide 1s infinite linear;
+}
+
+/* Se o botão já tiver fundo primário (ex: botão do Relatório no footer), a barra fica branca para dar contraste */
+.btn-primary.is-loading::after {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* A animação indo da esquerda para a direita continuamente */
+@keyframes loading-slide {
+    0% { left: -40%; }
+    100% { left: 100%; }
+}
+
+/* ==========================================================================
+   PÍLULAS CLICÁVEIS COM POPOVER DE REFERÊNCIA
+   ========================================================================== */
+
+.status-pill.clickable {
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+    position: relative;
+}
+
+.status-pill.clickable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.status-pill.clickable::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 3px;
+    background-color: currentColor;
+    border-radius: 50%;
+    opacity: 0.6;
+}
+
+/* Erro clicável com feedback visual mais forte */
+.status-pill.status-error.clickable {
+    border-color: var(--danger-color);
+    transition: all var(--transition-fast) ease;
+}
+
+.status-pill.status-error.clickable:hover {
+    background-color: rgba(215, 27, 74, 0.05);
+    border-color: var(--danger-color);
+    box-shadow: 0 4px 12px rgba(215, 27, 74, 0.2);
+}
+
+/* ==========================================================================
+   POPOVER DE REFERÊNCIA
+   ========================================================================== */
+
+.reference-popover {
+    position: fixed;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    width: 260px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: popoverFadeIn 0.2s ease-out;
+    top: auto;
+    left: auto;
+}
+
+.reference-popover::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid var(--bg-card);
+}
+
+.reference-popover .popover-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.popover-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.reference-item {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border-left: 2px solid var(--primary-color);
+    padding-left: 10px;
+    line-height: 1.4;
+}
+
+@keyframes popoverFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   LAYOUT RESPONSIVO PARA PERCENTIS PEDIÁTRICOS
+   ========================================================================== */
+
+/* Mobile (padrão) - coluna vertical */
+.popover-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+}
+
+.pediatric-column {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pediatric-column .reference-item:first-child {
+    margin-top: 0;
+}
+
+/* Desktop - duas colunas lado a lado */
+@media (min-width: 768px) {
+    .reference-popover {
+        width: 420px;
+    }
+
+    .popover-content:has(.pediatric-column) {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 12px;
+        row-gap: 0;
+    }
+
+    .pediatric-column {
+        border-left: 1px solid var(--border-color);
+        padding-left: 12px;
+        margin-left: 0;
+    }
+
+    .pediatric-column:first-of-type {
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .popover-content > .reference-item:first-child {
+        grid-column: 1 / -1;
+    }
+}

@@ -1,0 +1,166 @@
+/* ============================================================================
+   UTILITÁRIOS GLOBAIS
+   ============================================================================
+   
+   Classes reutilizáveis para Flexbox, Grid, Spacing, e Animações.
+   Reduz duplicação de código em toda a aplicação.
+   
+   ========================================================================== */
+
+/* ============================================================================
+   1. DISPLAY & POSITIONING
+   ========================================================================== */
+
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-start { display: flex; align-items: center; justify-content: flex-start; }
+.flex-end { display: flex; align-items: center; justify-content: flex-end; }
+.flex-column { display: flex; flex-direction: column; }
+.flex-column-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+.grid { display: grid; }
+.inline-flex { display: inline-flex; }
+.inline-block { display: inline-block; }
+
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.position-fixed { position: fixed; }
+
+/* ============================================================================
+   2. SIZING
+   ========================================================================== */
+
+.w-100,
+.full-width { width: 100%; }
+.w-auto { width: auto; }
+.h-100 { height: 100%; }
+.h-auto { height: auto; }
+
+.max-w-100 { max-width: 100%; }
+.max-h-80vh { max-height: 80vh; }
+.max-h-90vh { max-height: 90vh; }
+
+/* ============================================================================
+   3. GAPS & SPACING
+   ========================================================================== */
+
+.gap-5 { gap: 5px; }
+.gap-8 { gap: 8px; }
+.gap-10 { gap: 10px; }
+.gap-12 { gap: 12px; }
+.gap-15 { gap: 15px; }
+.gap-20 { gap: 20px; }
+.gap-30 { gap: 30px; }
+
+.p-0 { padding: 0; }
+.p-6 { padding: 6px; }
+.p-8 { padding: 8px; }
+.p-10 { padding: 10px; }
+.p-12 { padding: 12px; }
+.p-16 { padding: 16px; }
+.p-20 { padding: 20px; }
+.p-24 { padding: 24px; }
+
+.px-12 { padding-left: 12px; padding-right: 12px; }
+.px-20 { padding-left: 20px; padding-right: 20px; }
+.py-10 { padding-top: 10px; padding-bottom: 10px; }
+.py-12 { padding-top: 12px; padding-bottom: 12px; }
+.py-16 { padding-top: 16px; padding-bottom: 16px; }
+.py-20 { padding-top: 20px; padding-bottom: 20px; }
+
+.m-0 { margin: 0; }
+.mb-10 { margin-bottom: 10px; }
+.mb-15 { margin-bottom: 15px; }
+.mb-20 { margin-bottom: 20px; }
+.mt-5 { margin-top: 5px; }
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+
+/* ============================================================================
+   4. BORDER & RADIUS
+   ========================================================================== */
+
+.rounded { border-radius: var(--radius); }
+.rounded-full { border-radius: var(--radius-full); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.border { border: 1px solid var(--border-color); }
+.border-dashed { border: 1px dashed var(--border-color); }
+.border-none { border: none; }
+
+/* ============================================================================
+   5. COLORS & TEXT
+   ========================================================================== */
+
+.text-main { color: var(--text-main); }
+.text-muted { color: var(--text-muted); }
+.text-white { color: var(--white); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+
+.bg-card { background: var(--bg-card); }
+.bg-body { background: var(--bg-body); }
+.bg-transparent { background: transparent; }
+
+.font-600 { font-weight: 600; }
+.font-700 { font-weight: 700; }
+.font-800 { font-weight: 800; }
+
+.text-0-9rem { font-size: 0.9rem; }
+.text-0-95rem { font-size: 0.95rem; }
+.text-1rem { font-size: 1rem; }
+.text-1-1rem { font-size: 1.1rem; }
+.text-1-5rem { font-size: 1.5rem; }
+
+/* ============================================================================
+   6. TRANSITIONS & ANIMATIONS
+   ========================================================================== */
+
+.transition-fast { transition: all var(--transition-fast); }
+.transition-normal { transition: all var(--transition-normal); }
+.transition-color-fast { transition: color var(--transition-fast); }
+.transition-bg-fast { transition: background-color var(--transition-fast); }
+.transition-border-fast { transition: border-color var(--transition-fast); }
+.transition-transform-fast { transition: transform var(--transition-fast); }
+
+/* ============================================================================
+   7. SHADOWS
+   ========================================================================== */
+
+.shadow { box-shadow: varvar(--shadow-lg); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-sm { box-shadow: var(--shadow-sm15); }
+.shadow-sm { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+.shadow-success { box-shadow: 0 4px 10px var(--shadow-success); }
+.shadow-danger { box-shadow: 0 4px 10px var(--shadow-danger); }
+.shadow-warning { box-shadow: 0 4px 10px var(--shadow-warning); }
+
+/* ============================================================================
+   8. CURSOR & USER SELECT
+   ========================================================================== */
+
+.cursor-pointer { cursor: pointer; }
+.cursor-not-allowed { cursor: not-allowed; }
+.user-select-none { user-select: none; }
+.pointer-events-none { pointer-events: none; }
+
+/* ============================================================================
+   9. VISIBILIDADE
+   ========================================================================== */
+
+.hidden { display: none; }
+.invisible { visibility: hidden; }
+.opacity-50 { opacity: 0.5; }
+.opacity-100 { opacity: 1; }
+
+/* ============================================================================
+   10. Z-INDEX
+   ========================================================================== */
+
+.z-5 { z-index: 5; }
+.z-10 { z-index: 10; }
+.z-50 { z-index: 50; }
+.z-100 { z-index: 100; }
+.z-200 { z-index: 200; }
+.z-900 { z-index: 900; }

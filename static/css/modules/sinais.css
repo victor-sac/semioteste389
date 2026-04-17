@@ -1,0 +1,232 @@
+/* static/css/modules/sinais.css */
+
+/* ========================================
+   PRESSÃO ARTERIAL (PA) - PÍLULAS
+   ======================================== */
+.pa-pills-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 30px; 
+}
+
+.pa-pills-row .pill-wrapper {
+    width: auto;
+    flex: 0 1 auto;
+    margin: 0;
+}
+
+.pill-container.pa-pill {
+    width: 130px; 
+    height: 70px; 
+    border-radius: 35px; 
+    padding: 0 15px;
+}
+
+.pill-container.pa-pill .pill-input {
+    font-size: 1.8rem;
+}
+
+.pa-unit {
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin-left: 5px;
+    font-weight: 400;
+}
+
+/* ========================================
+   AÇÕES (FEEDBACK E BOTÕES)
+   ======================================== */
+.pa-actions-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.btn-action-vertical {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    gap: 8px;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-action-vertical:hover {
+    transform: translateY(-2px);
+}
+
+.btn-action-vertical span.label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Botão Circular (Nova Aferição) gerado via dom.js */
+.circle-btn-lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--bg-body);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: var(--shadow);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.circle-btn-lg:hover {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* ========================================
+   CAIXA DE DETALHES & TEMPO
+   ======================================== */
+.details-box {
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    background: var(--bg-card);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    animation: fadeIn var(--transition-normal) ease;
+}
+
+/* Cabeçalho da Caixa de Detalhes gerado via dom.js */
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.details-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.details-col-left {
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.details-col-right {
+    padding-left: 20px;
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tempo-wrapper {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tempo-wrapper.active {
+    display: flex;
+}
+
+/* ========================================
+   HISTÓRICO
+   ======================================== */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.history-table th, .history-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.history-table th {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.history-table td {
+    color: var(--text-main);
+}
+
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ========================================
+   RESPONSIVIDADE (MOBILE)
+   ======================================== */
+@media (max-width: 768px) {
+    /* Layout de Detalhes vira coluna única */
+    .details-split {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .details-col-left {
+        padding-right: 0;
+    }
+
+    .details-col-right {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+        padding-top: 20px;
+    }
+    
+    #feedback-pa-pill {
+        margin-bottom: 5px;
+    }
+
+    /* --- NOVA ORGANIZAÇÃO DAS PÍLULAS DE PA (EM COLUNA) --- */
+    .pa-pills-row {
+        flex-direction: column; /* Coloca uma exatamente debaixo da outra */
+        align-items: center;    /* Centraliza ambas no meio do ecrã */
+        gap: 16px;              /* Espaço vertical elegante entre PAS e PAD */
+    }
+
+    .pill-container.pa-pill {
+        width: 160px; /* Como não dividem o ecrã, podem ser mais largas */
+        height: 60px; 
+    }
+
+    .pill-container.pa-pill .pill-input {
+        font-size: 1.6rem; 
+    }
+
+    .pa-pills-row .pill-label {
+        font-size: 1rem;
+        display: block; /* Mantém o texto natural sem forçar a quebra */
+    }
+
+    .pa-unit {
+        margin-left: 5px; 
+        font-size: 0.85rem;
+    }
+}

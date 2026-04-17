@@ -1,0 +1,249 @@
+/* static/css/modules/dados-gerais.css */
+
+/* ========================================
+   LAYOUT BASE
+   ======================================== */
+
+.dados-gerais-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px 0 40px;
+}
+
+.dados-gerais-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.dados-gerais-label {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ========================================
+   PILL CONTAINER (Base Compartilhada)
+   ======================================== */
+
+.date-pill-container,
+.toggle-pill-container {
+    display: flex;
+    width: 100%;
+    max-width: var(--pill-max-width-mobile);
+    height: var(--pill-height-mobile);
+    background-color: var(--dark-bg);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    padding: 0 var(--pill-padding-x-mobile);
+    box-shadow: 0 4px 15px var(--dark-shadow);
+    box-sizing: border-box;
+    transition: all var(--transition-fast) ease;
+}
+
+.date-pill-container {
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-pill-container {
+    padding: 4px;
+}
+
+/* ========================================
+   DATE PILL - INPUTS
+   ======================================== */
+
+.date-pill-icon {
+    font-size: var(--pill-icon-size-mobile);
+    color: var(--icon-gray);
+    margin-right: 6px;
+}
+
+.date-pill-container input.date-pill-input {
+    flex: none;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: var(--pill-input-font-size-mobile);
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    padding: 0;
+    height: auto;
+}
+
+.date-pill-container input.date-pill-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.date-pill-container input.input-dd,
+.date-pill-container input.input-mm {
+    width: 40px;
+}
+
+.date-pill-container input.input-yyyy {
+    width: 60px;
+}
+
+.date-pill-separator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: var(--pill-input-font-size-mobile);
+    font-weight: 700;
+    margin: 0 4px;
+}
+
+/* ========================================
+   TOGGLE PILL - BUTTONS
+   ======================================== */
+
+.toggle-pill-btn {
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: var(--icon-gray);
+    border-radius: var(--radius-full);
+    padding: 0;
+    font-size: var(--pill-button-font-size);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+    outline: none;
+}
+
+.toggle-pill-btn:hover {
+    color: var(--white);
+}
+
+.toggle-pill-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.toggle-pill-btn .material-icons-round {
+    font-size: var(--pill-icon-font-size);
+}
+
+/* ========================================
+   AGE BADGE
+   ======================================== */
+
+.age-badge {
+    margin: -12px 0;
+    padding: 4px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    display: inline-flex;
+    align-items: center;
+    transition: all var(--transition-fast) ease;
+}
+
+.age-badge.hidden {
+    display: none !important;
+}
+
+body.dark-mode .age-badge {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   LIGHT MODE THEME
+   ======================================== */
+
+/* Containers */
+body:not(.dark-mode) .date-pill-container,
+body:not(.dark-mode) .toggle-pill-container {
+    background-color: var(--white);
+    border: 1px solid var(--pill-border-light);
+    box-shadow: 0 4px 15px var(--light-shadow);
+}
+
+/* Icons & Text */
+body:not(.dark-mode) .date-pill-icon {
+    color: var(--pill-text-light-muted);
+}
+
+body:not(.dark-mode) .date-pill-container input.date-pill-input {
+    color: var(--pill-text-light);
+}
+
+body:not(.dark-mode) .date-pill-container input.date-pill-input::placeholder {
+    color: #c0c6cc;
+}
+
+body:not(.dark-mode) .date-pill-separator {
+    color: var(--icon-gray);
+}
+
+/* Buttons */
+body:not(.dark-mode) .toggle-pill-btn {
+    color: var(--pill-text-light-muted);
+}
+
+body:not(.dark-mode) .toggle-pill-btn:hover:not(.active) {
+    color: var(--pill-text-light);
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+body:not(.dark-mode) .toggle-pill-btn.active {
+    color: var(--white);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (min-width: 768px) {
+    .date-pill-container,
+    .toggle-pill-container {
+        max-width: var(--pill-max-width-desktop);
+        height: var(--pill-height-desktop);
+        padding-right: var(--pill-padding-x-desktop);
+        padding-left: var(--pill-padding-x-desktop);
+    }
+
+    .toggle-pill-container {
+        padding: 4px;
+    }
+
+    .date-pill-icon {
+        font-size: var(--pill-icon-size-desktop);
+    }
+
+    .date-pill-container input.date-pill-input,
+    .date-pill-separator {
+        font-size: var(--pill-input-font-size-desktop);
+    }
+
+    .date-pill-container input.input-dd,
+    .date-pill-container input.input-mm {
+        width: 45px;
+    }
+
+    .date-pill-container input.input-yyyy {
+        width: 70px;
+    }
+
+    .toggle-pill-btn {
+        font-size: 1rem;
+    }
+
+    .toggle-pill-btn .material-icons-round {
+        font-size: 20px;
+    }
+}

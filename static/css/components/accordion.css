@@ -1,0 +1,78 @@
+/* static/css/components/accordion.css */
+
+.accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.accordion {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.accordion-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    background: transparent;
+    transition: background-color var(--transition-fast);
+}
+
+.accordion-header:hover {
+    background-color: var(--overlay-light);
+}
+
+.accordion-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.accordion-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color var(--transition-normal);
+}
+
+.accordion-toggle-btn .material-icons-round {
+    font-size: 1.5rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Estado Aberto */
+.accordion.open .accordion-toggle-btn .material-icons-round {
+    transform: rotate(45deg);
+}
+
+.accordion.open .accordion-toggle-btn {
+    color: var(--danger-color);
+}
+
+.accordion-content {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid transparent;
+}
+
+.accordion.open .accordion-content {
+    display: block;
+    border-top-color: var(--border-color);
+    padding-top: 20px;
+    animation: fadeIn 0.3s ease;
+}

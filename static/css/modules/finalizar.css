@@ -1,0 +1,105 @@
+/* ==========================================================================
+   SUBBOX DE OPÇÕES EXPANSÍVEL (Módulo Relatório)
+   ========================================================================== */
+.options-subbox {
+    background-color: var(--bg-body); 
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin: 12px 0 13px;
+    transition: all var(--transition-normal) ease;
+}
+
+.options-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options-header > div {
+    margin-bottom: 0;
+}
+
+.options-header .input-group {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    gap: 12px;
+}
+
+.options-header .input-group label {
+    margin-bottom: 0;
+}
+
+.btn-more-options {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color var(--transition-fast) ease;
+}
+
+.btn-more-options:hover {
+    background-color: var(--overlay-medium); 
+}
+
+.options-body {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.options-body.hidden {
+    display: none;
+}
+
+.email-input-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.email-input-wrapper .input-email {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: var(--bg-card); 
+    color: var(--text-main);
+    transition: border-color var(--transition-fast) ease;
+}
+
+.email-input-wrapper .input-email:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* ==========================================================================
+   ÁREA DE TEXTO DO RELATÓRIO FINAL
+   ========================================================================== */
+.relatorio-textarea {
+    height: 300px;
+    font-family: var(--font-family-mono, monospace);
+    margin-top: 10px;
+    resize: vertical;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    transition: border-color var(--transition-fast) ease;
+}
+
+.relatorio-textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
